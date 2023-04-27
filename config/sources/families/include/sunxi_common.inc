@@ -6,6 +6,7 @@
 # This file is a part of the Armbian Build Framework
 # https://github.com/armbian/build/
 #
+#set -x
 enable_extension "sunxi-tools"
 declare -g ARCH=armhf
 declare -g BOOTDELAY=1
@@ -28,6 +29,12 @@ case $BRANCH in
 	current)
 		declare -g KERNEL_MAJOR_MINOR="6.1" # Major and minor versions of this kernel.
 		declare -g KERNELBRANCH="tag:v6.1.24"
+		echo KERNELSOURCE=$KERNELSOURCE
+		echo KERNELBRANCH=$KERNELBRANCH
+		echo KERNELPATCHDIR=$KERNELPATCHDIR
+		KERNELSOURCE='https://github.com/LT21-LINUX/pi-linux.git'
+		KERNELBRANCH='branch:pi-6.1'
+		KERNELPATCH_DISABLE="yes"
 		;;
 
 	edge)

@@ -45,8 +45,12 @@ function compile_kernel() {
 	LOG_SECTION="kernel_maybe_clean" do_with_logging do_with_hooks kernel_maybe_clean
 
 	# Patching.
+	if [[ "${KERNELPATCH_DISABLE}" == yes ]]; then
+		display_alert "PATCH_DISABLE with" "kernel kernel_main_patching" "debug"
+	else
 	declare hash pre_patch_version
 	kernel_main_patching # has it's own logging sections inside
+	fi
 
 	# Stop after patching;
 	if [[ "${PATCH_ONLY}" == yes ]]; then
