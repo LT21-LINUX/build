@@ -27,6 +27,11 @@ case $BRANCH in
 		;;
 
 	current)
+		#BUG need to move from u-boot to pi-u-boot
+		#BOOTSOURCE='https://github.com/LT21-LINUX/pi-u-boot.git'
+		BOOTSOURCE='https://github.com/LT21-LINUX/u-boot.git'
+		BOOTBRANCH='branch:v2022.07-pi'
+		BOOTPATCHDIR=""
 		declare -g KERNEL_MAJOR_MINOR="6.1" # Major and minor versions of this kernel.
 		declare -g KERNELBRANCH="tag:v6.1.24"
 		echo KERNELSOURCE=$KERNELSOURCE
