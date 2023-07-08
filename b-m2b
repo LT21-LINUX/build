@@ -1,0 +1,16 @@
+
+#R="jammy bullseye bookworm focal lunar buster"
+#./compile.sh BOARD=bananapim2ultra BRANCH=current RELEASE=$IN BUILD_MINIMAL=no BUILD_DESKTOP=yes KERNEL_CONFIGURE=no DESKTOP_ENVIRONMENT=xfce DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED="3dsupport browsers chat desktop_tools editors internet multimedia office programming remote_desktop" COMPRESS_OUTPUTIMAGE=sha,img
+
+B=bananapim2berry
+R="jammy bullseye bookworm buster focal lunar"
+
+for IN in $R ; do
+./compile.sh BOARD=$B BRANCH=current RELEASE=$IN BUILD_MINIMAL=no BUILD_DESKTOP=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,img
+./compile.sh BOARD=$B BRANCH=current RELEASE=$IN BUILD_MINIMAL=no BUILD_DESKTOP=yes KERNEL_CONFIGURE=no DESKTOP_ENVIRONMENT=xfce DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED="" COMPRESS_OUTPUTIMAGE=sha,img
+done
+
+
+./compile.sh BOARD=$B BRANCH=current RELEASE=jammy BUILD_MINIMAL=no BUILD_DESKTOP=yes KERNEL_CONFIGURE=no DESKTOP_ENVIRONMENT=mate DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED="3dsupport browsers chat desktop_tools editors email internet multimedia office programming remote_desktop" COMPRESS_OUTPUTIMAGE=sha,img
+
+./compile.sh BOARD=$B BRANCH=current RELEASE=jammy BUILD_MINIMAL=no BUILD_DESKTOP=yes KERNEL_CONFIGURE=no DESKTOP_ENVIRONMENT=budgie DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED="3dsupport browsers chat desktop_tools editors email internet multimedia office programming remote_desktop" COMPRESS_OUTPUTIMAGE=sha,img
