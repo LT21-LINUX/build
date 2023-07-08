@@ -1,0 +1,54 @@
+diff --git a/arch/arm/boot/dts/sun8i-r40-bananapi-m2-ultra.dts b/arch/arm/boot/dts/sun8i-r40-bananapi-m2-ultra.dts
+index ebb2bd322112..f3a02302c976 100644
+--- a/arch/arm/boot/dts/sun8i-r40-bananapi-m2-ultra.dts
++++ b/arch/arm/boot/dts/sun8i-r40-bananapi-m2-ultra.dts
+@@ -207,8 +207,8 @@ &mmc1 {
+ 
+ &mmc2 {
+ 	vmmc-supply = <&reg_dcdc1>;
+-	vqmmc-supply = <&reg_dcdc1>;
+ 	bus-width = <8>;
++	cap-mmc-hw-reset;
+ 	non-removable;
+ 	status = "okay";
+ };
+diff --git a/arch/arm/boot/dts/sun8i-r40.dtsi b/arch/arm/boot/dts/sun8i-r40.dtsi
+index 74c20d84046f..953b7b244885 100644
+--- a/arch/arm/boot/dts/sun8i-r40.dtsi
++++ b/arch/arm/boot/dts/sun8i-r40.dtsi
+@@ -402,8 +402,7 @@ mmc1: mmc@1c10000 {
+ 		};
+ 
+ 		mmc2: mmc@1c11000 {
+-			compatible = "allwinner,sun8i-r40-emmc",
+-				     "allwinner,sun50i-a64-emmc";
++			compatible = "allwinner,sun8i-r40-emmc";
+ 			reg = <0x01c11000 0x1000>;
+ 			clocks = <&ccu CLK_BUS_MMC2>, <&ccu CLK_MMC2>;
+ 			clock-names = "ahb", "mmc";
+diff --git a/drivers/mmc/host/sunxi-mmc.c b/drivers/mmc/host/sunxi-mmc.c
+index dfe2b95f5b40..93572e51eb83 100644
+--- a/drivers/mmc/host/sunxi-mmc.c
++++ b/drivers/mmc/host/sunxi-mmc.c
+@@ -1168,6 +1168,13 @@ static const struct sunxi_mmc_cfg sun8i_a83t_emmc_cfg = {
+ 	.ccu_has_timings_switch = true,
+ };
+ 
++static const struct sunxi_mmc_cfg sun8i_r40_emmc_cfg = {
++	.idma_des_size_bits = 13,
++	.clk_delays = NULL,
++	.can_calibrate = true,
++	.needs_new_timings = false,
++};
++
+ static const struct sunxi_mmc_cfg sun9i_a80_cfg = {
+ 	.idma_des_size_bits = 16,
+ 	.clk_delays = sun9i_mmc_clk_delays,
+@@ -1226,6 +1233,7 @@ static const struct of_device_id sunxi_mmc_of_match[] = {
+ 	{ .compatible = "allwinner,sun5i-a13-mmc", .data = &sun5i_a13_cfg },
+ 	{ .compatible = "allwinner,sun7i-a20-mmc", .data = &sun7i_a20_cfg },
+ 	{ .compatible = "allwinner,sun8i-a83t-emmc", .data = &sun8i_a83t_emmc_cfg },
++	{ .compatible = "allwinner,sun8i-r40-emmc", .data = &sun8i_r40_emmc_cfg },
+ 	{ .compatible = "allwinner,sun9i-a80-mmc", .data = &sun9i_a80_cfg },
+ 	{ .compatible = "allwinner,sun20i-d1-mmc", .data = &sun20i_d1_cfg },
+ 	{ .compatible = "allwinner,sun50i-a64-mmc", .data = &sun50i_a64_cfg },
